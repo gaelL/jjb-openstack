@@ -20,7 +20,9 @@
           sudo /opt/tempest-scripts/configure-tempest.sh -a
           sudo /opt/tempest-scripts/run-tempest.sh -v icehouse -p spinal-stack
           ret=$(($? + $ret))
+          sudo mv /usr/share/openstack-tempest-icehouse/tempest_xunit.xml .
+
           exit $ret
     publishers:
       - junit:
-          results: '/usr/share/openstack-tempest-icehouse/tempest_xunit.xml'
+          results: '*_xunit.xml'
