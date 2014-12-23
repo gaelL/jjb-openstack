@@ -8,19 +8,13 @@
     builders:
       - shell: |
           set +e
-          # TODO (EmilienM) Need to be moved in config-tools & tempest
-          # (Work in progress)
           cp /etc/config-tools/openrc.sh ./smoke/
           ./smoke/smoke-initialize.sh
           ./smoke/smoke-validate.sh
-          # ./launch-monitoring-checks.sh
-          # ret=$?
           cd /var/lib/jenkins/jobs/sanity/workspace
           ./build_tempest/setup-tempest.sh
           ./build_tempest/configure-tempest.sh -a
           ./build_tempest/run-tempest.sh -v icehouse -p spinal-stack
-          ret=$(($? + $ret))
-          exit $ret
     publishers:
       - junit:
           results: 'build_tempest/tempest/*_xunit.xml'
