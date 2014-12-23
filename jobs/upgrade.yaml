@@ -8,6 +8,7 @@
     builders:
       - shell: |
           set -e
+          ANSIBLE_HOST_KEY_CHECKING=false
           ansible-playbook -s -M /srv/edeploy/ansible/library /etc/ansible/site.yml -v --tags "install_server"
           ansible-playbook -s -M /srv/edeploy/ansible/library /etc/ansible/site.yml -v --tags "before_config"
           echo '0' | sudo tee /etc/config-tools/step
