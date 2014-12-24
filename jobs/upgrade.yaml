@@ -9,6 +9,10 @@
       - shell: |
           set -e
           export ANSIBLE_HOST_KEY_CHECKING=false
+          for template in site.yml hosts group_vars/all; do
+            generate.py 0 /etc/config-tools/global.yml /etc/ansible/$template.tmpl|grep -v '^$' |sudo tee /etc/ansible/$template > /dev/null
+            sudo chmod 0644 /etc/ansible/$template
+          done
           ansible-playbook -s -M /srv/edeploy/ansible/library /etc/ansible/site.yml -v --tags "install_server"
           ansible-playbook -s -M /srv/edeploy/ansible/library /etc/ansible/site.yml -v --tags "before_config"
           echo '0' | sudo tee /etc/config-tools/step
