@@ -15,8 +15,10 @@
           done
           ansible-playbook -s -M /srv/edeploy/ansible/library /etc/ansible/site.yml -v --tags "install_server"
           ansible-playbook -s -M /srv/edeploy/ansible/library /etc/ansible/site.yml -v --tags "before_config"
-          echo '5' | sudo tee /etc/config-tools/step
-          configure.sh
+          for step in 0 5; do
+            echo $step | sudo tee /etc/config-tools/step
+            configure.sh $step
+          done
           ansible-playbook -s -M /srv/edeploy/ansible/library /etc/ansible/site.yml -v --tags "after_config"
           ret=$?
           exit $ret
