@@ -9,7 +9,7 @@
       - shell: |
           set +e
           sudo /opt/tempest-scripts/configure-tempest.sh -a
-          sudo /opt/tempest-scripts/run-tempest.sh -v icehouse -p spinal-stack
+          sudo /opt/tempest-scripts/run-tempest.sh -v juno -p spinal-stack
           ret=$?
           sudo cp /usr/share/openstack-tempest-icehouse/*_xunit.xml .
           exit $ret
