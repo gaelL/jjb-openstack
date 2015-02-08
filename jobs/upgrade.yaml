@@ -15,12 +15,9 @@
           done
           ansible-playbook -s -M /srv/edeploy/ansible/library /etc/ansible/site.yml -v --tags "install_server"
           ansible-playbook -s -M /srv/edeploy/ansible/library /etc/ansible/site.yml -v --tags "before_config"
-          # ensure Puppet services are managed by Puppet itself
-          generate.py 0 /etc/config-tools/global.yml /etc/puppet/data/common.yaml.tmpl|grep -v '^$' |sudo tee /etc/puppet/data/common.yaml > /dev/null
-          sudo puppet apply /etc/puppet/modules/cloud/scripts/bootstrap.pp | tee $WORKSPACE/puppet-master.step0.log
-          sudo puppet apply -e 'include ::cloud::install::puppetdb' | tee $WORKSPACE/puppet-master.step0.log
-          sudo puppet apply /etc/puppet/modules/cloud/scripts/bootstrap_post_puppetdb.pp | tee $WORKSPACE/puppet-master.step0.log
-          # run Puppet directly at step 5 do not break configurations from other steps
+          echo '0' | sudo tee /etc/config-tools/step
+          configure.sh 0
+          echo '5' | sudo tee /etc/config-tools/step
           configure.sh 5
           ansible-playbook -s -M /srv/edeploy/ansible/library /etc/ansible/site.yml -v --tags "after_config"
           ret=$?
