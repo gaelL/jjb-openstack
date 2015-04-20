@@ -11,7 +11,7 @@
           sudo /opt/tempest-scripts/configure-tempest.sh -a
           sudo /opt/tempest-scripts/run-tempest.sh -v juno -p spinal-stack
           ret=$?
-          sudo mv /usr/share/openstack-tempest-juno/tempest_xunit.xml .
+          sudo cp /usr/share/openstack-tempest-juno/tempest_xunit.xml .
           sudo /opt/tempest-scripts/clean-tempest.sh
           exit $ret
     publishers:
