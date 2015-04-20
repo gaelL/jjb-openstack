@@ -10,9 +10,9 @@
           set +e
           sudo /opt/tempest-scripts/configure-tempest.sh -a
           sudo /opt/tempest-scripts/run-tempest.sh -v juno -p spinal-stack
+          sudo mv /usr/share/openstack-tempest-juno/tempest_xunit.xml .
           ret=$?
           sudo /opt/tempest-scripts/clean-tempest.sh
-          sudo cp /usr/share/openstack-tempest-juno/*_xunit.xml .
           exit $ret
     publishers:
       - junit:
